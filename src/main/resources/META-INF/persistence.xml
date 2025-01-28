@@ -13,7 +13,7 @@
 <!--            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/> &lt;!&ndash; DB Dialect &ndash;&gt;-->
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/sampledb" />
-            <property name="jakarta.persistence.jdbc.user" value="user" />
+            <property name="jakarta.persistence.jdbc.user" value="admin" />
             <property name="jakarta.persistence.jdbc.password" value="password" />
 
 
