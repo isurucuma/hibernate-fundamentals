@@ -1,11 +1,9 @@
 package isurucuma.learn;
 
 import isurucuma.learn.entities.Product;
-import isurucuma.learn.persistance.CustomPersistenceUnitInfo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import org.hibernate.jpa.HibernatePersistenceProvider;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,21 +23,25 @@ public class App
         props.put("hibernate.show.sql", "true");
         props.put("hibernate.hbm2ddl.auto", "create");
 
-        try (
-                EntityManagerFactory emf = Persistence.createEntityManagerFactory("hibernate-fundamentals-persistence-unit");
-                EntityManager em = emf.createEntityManager()
-        ) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hibernate-fundamentals-persistence-unit");
+        EntityManager em = emf.createEntityManager();
+
+        try {
             em.getTransaction().begin();
-            Product product = new Product();
-            product.setId(2L);
-            product.setName("Book2");
+//            Product product = new Product();
+//            product.setId(4L);
+//            product.setName("Book4");
+//
+//            em.persist(product);
 
-            em.persist(product);
+            var p1 = em.getReference(Product.class, 3L);
+            System.out.println(p1);
 
-            var p1 = em.find(Product.class, 2L);
-            System.out.println(p1.getName());
-
+            p1.setName("AnneBook2");
+            em.refresh(p1);
             em.getTransaction().commit();
+        }finally {
+            em.close();
         }
     }
 }
