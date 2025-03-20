@@ -28,17 +28,14 @@ public class App
 
         try {
             em.getTransaction().begin();
-//            Product product = new Product();
-//            product.setId(4L);
-//            product.setName("Book4");
-//
-//            em.persist(product);
+            Product product = new Product();
+            product.setName("Book4");
 
-            var p1 = em.getReference(Product.class, 3L);
+            em.persist(product);
+
+            var p1 = em.getReference(Product.class, product.getId());
             System.out.println(p1);
 
-            p1.setName("AnneBook2");
-            em.refresh(p1);
             em.getTransaction().commit();
         }finally {
             em.close();
