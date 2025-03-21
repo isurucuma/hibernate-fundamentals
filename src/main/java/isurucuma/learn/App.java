@@ -1,6 +1,7 @@
 package isurucuma.learn;
 
 import isurucuma.learn.entities.Product;
+import isurucuma.learn.entities.keys.ProductKey;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -29,12 +30,16 @@ public class App
         try {
             em.getTransaction().begin();
             Product product = new Product();
-            product.setName("Book4");
+            product.setName("Product 1");
+            product.setCode("P1");
+            product.setNumber("N1");
+
 
             em.persist(product);
 
-            var p1 = em.getReference(Product.class, product.getId());
-            System.out.println(p1);
+            ProductKey productKey = new ProductKey("N1", "P1");
+            Product productReference = em.getReference(Product.class, productKey);
+            System.out.println(productReference);
 
             em.getTransaction().commit();
         }finally {

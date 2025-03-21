@@ -1,25 +1,34 @@
 package isurucuma.learn.entities;
 
-import isurucuma.learn.entities.generators.GeneratedUUID;
-import isurucuma.learn.entities.generators.UUIDGenerator;
+import isurucuma.learn.entities.keys.ProductKey;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.IdGeneratorType;
-
-import java.util.UUID;
+import jakarta.persistence.IdClass;
 
 @Entity
+@IdClass(ProductKey.class)
 public class Product {
 
-    public String getId() {
-        return id;
+    @Id
+    private String code;
+    @Id
+    private String number;
+    private String name;
+
+    public String getCode() {
+        return code;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getName() {
@@ -30,17 +39,8 @@ public class Product {
         this.name = name;
     }
 
-    @Id
-    @GeneratedUUID
-    private String id;
-
-    private String name;
-
     @Override
     public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return "Product{" + "code='" + code + '\'' + ", number='" + number + '\'' + ", name='" + name + '\'' + '}';
     }
 }
