@@ -8,7 +8,18 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String comment;
-    // here from the comment side we have removed the post reference
+
+    @ManyToOne
+    @JoinColumn(name = "post") // column in this table that references the relation in the other table
+    private Post post;
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
 
     public void setId(Long id) {
         this.id = id;

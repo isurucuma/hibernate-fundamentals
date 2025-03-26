@@ -12,9 +12,8 @@ public class Post {
     private String title;
     private String content;
 
-    @OneToMany
-    @JoinColumn(name = "post_id")
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)// the name of the field in the other table that references this table
+    private List<Comment> comments; // by default this fetch is lazy, making it eager will make all the comments to be fetched at once and that will consume lot of memory
 
     public Long getId() {
         return id;

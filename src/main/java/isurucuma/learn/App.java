@@ -36,6 +36,7 @@ public class App {
             comment1.setComment("This is my first comment");
 
             post1.setComments(List.of(comment1));
+            comment1.setPost(post1);
 
             em.persist(post1);
             em.persist(comment1);
