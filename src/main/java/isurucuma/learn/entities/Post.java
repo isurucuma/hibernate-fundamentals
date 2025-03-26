@@ -1,9 +1,8 @@
 package isurucuma.learn.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Post {
@@ -13,12 +12,24 @@ public class Post {
     private String title;
     private String content;
 
+    @OneToMany
+//    @JoinColumn(name = "post_id") if you don't specify this then hibernate will create a join table as in the case of many to many
+    private List<Comment> comments;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getTitle() {

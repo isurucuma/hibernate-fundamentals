@@ -8,6 +8,7 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,7 +34,8 @@ public class App {
 
             Comment comment1 = new Comment();
             comment1.setComment("This is my first comment");
-            comment1.setPost(post1);
+
+            post1.setComments(List.of(comment1));
 
             em.persist(post1);
             em.persist(comment1);
