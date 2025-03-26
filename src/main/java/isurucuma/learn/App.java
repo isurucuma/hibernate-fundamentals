@@ -1,22 +1,20 @@
 package isurucuma.learn;
 
-import isurucuma.learn.entities.Product;
-import isurucuma.learn.entities.keys.ProductKey;
+import isurucuma.learn.entities.Passport;
+import isurucuma.learn.entities.Person;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Hello world!
- *
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
+public class App {
+    public static void main(String[] args) {
 
         // represents the context
 
@@ -29,20 +27,29 @@ public class App
 
         try {
             em.getTransaction().begin();
-            Product product = new Product();
-            product.setName("Product 1");
-            product.setCode("P1");
-            product.setNumber("N1");
 
+            Person person = new Person();
+            person.setName("Anton");
 
-            em.persist(product);
+            Passport passport = new Passport();
+            passport.setNumber("1234");
 
-            ProductKey productKey = new ProductKey("N1", "P1");
-            Product productReference = em.getReference(Product.class, productKey);
-            System.out.println(productReference);
+            person.setPassport(passport);
+
+            em.persist(passport);
+            em.persist(person);
+
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE p.passport.number = :number", Person.class);
+            query.setParameter("number", "1234");
+
+            // logging the result which is the passport object, here since the loading is set to LAZY, the person object is not loaded
+            System.out.println(query.getSingleResult());
+
+            // not we are explictly loading the person object
+            System.out.println(query.getSingleResult().getPassport());
 
             em.getTransaction().commit();
-        }finally {
+        } finally {
             em.close();
         }
     }
