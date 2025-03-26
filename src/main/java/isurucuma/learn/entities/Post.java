@@ -13,7 +13,7 @@ public class Post {
     private String content;
 
     @OneToMany
-//    @JoinColumn(name = "post_id") if you don't specify this then hibernate will create a join table as in the case of many to many
+    @JoinColumn(name = "post_id")
     private List<Comment> comments;
 
     public Long getId() {
