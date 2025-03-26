@@ -1,7 +1,7 @@
 package isurucuma.learn;
 
-import isurucuma.learn.entities.Passport;
-import isurucuma.learn.entities.Person;
+import isurucuma.learn.entities.Comment;
+import isurucuma.learn.entities.Post;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -27,26 +27,16 @@ public class App {
 
         try {
             em.getTransaction().begin();
+            Post post1 = new Post();
+            post1.setTitle("First post");
+            post1.setContent("This is my first post");
 
-            Person person = new Person();
-            person.setName("Anton");
+            Comment comment1 = new Comment();
+            comment1.setComment("This is my first comment");
+            comment1.setPost(post1);
 
-            Passport passport = new Passport();
-            passport.setNumber("1234");
-
-            person.setPassport(passport);
-
-            em.persist(passport);
-            em.persist(person);
-
-            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE p.passport.number = :number", Person.class);
-            query.setParameter("number", "1234");
-
-            // logging the result which is the passport object, here since the loading is set to LAZY, the person object is not loaded
-            System.out.println(query.getSingleResult());
-
-            // not we are explictly loading the person object
-            System.out.println(query.getSingleResult().getPassport());
+            em.persist(post1);
+            em.persist(comment1);
 
             em.getTransaction().commit();
         } finally {
