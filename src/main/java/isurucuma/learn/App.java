@@ -1,11 +1,10 @@
 package isurucuma.learn;
 
-import isurucuma.learn.entities.Comment;
-import isurucuma.learn.entities.Post;
+import isurucuma.learn.entities.Group;
+import isurucuma.learn.entities.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,18 +27,29 @@ public class App {
 
         try {
             em.getTransaction().begin();
-            Post post1 = new Post();
-            post1.setTitle("First post");
-            post1.setContent("This is my first post");
+            Group g1 = new Group();
+            g1.setName("g1");
 
-            Comment comment1 = new Comment();
-            comment1.setComment("This is my first comment");
+            Group g2 = new Group();
+            g2.setName("g2");
 
-            post1.setComments(List.of(comment1));
-            comment1.setPost(post1);
+            User u1 = new User();
+            u1.setName("u1");
 
-            em.persist(post1);
-            em.persist(comment1);
+            User u2 = new User();
+            u2.setName("u2");
+
+            u1.setGroups(List.of(g1));
+            g1.setUsers(List.of(u1, u2));
+
+            u2.setGroups(List.of(g1, g2));
+            g2.setUsers(List.of(u2));
+
+            em.persist(g1);
+            em.persist(g2);
+            em.persist(u1);
+            em.persist(u2);
+
 
             em.getTransaction().commit();
         } finally {
