@@ -1,7 +1,7 @@
 package isurucuma.learn;
 
-import isurucuma.learn.entities.Group;
-import isurucuma.learn.entities.User;
+import isurucuma.learn.entities.Book;
+import isurucuma.learn.entities.ElectronicDevice;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -27,29 +27,19 @@ public class App {
 
         try {
             em.getTransaction().begin();
-            Group g1 = new Group();
-            g1.setName("g1");
 
-            Group g2 = new Group();
-            g2.setName("g2");
+            // Create a new book
+            Book book = new Book();
+            book.setName("Effective Java");
+            book.setAuthor("Joshua Bloch");
+            book.setIsbn("978-0134686097");
+            em.persist(book);
 
-            User u1 = new User();
-            u1.setName("u1");
-
-            User u2 = new User();
-            u2.setName("u2");
-
-            u1.setGroups(List.of(g1));
-            g1.setUsers(List.of(u1, u2));
-
-            u2.setGroups(List.of(g1, g2));
-            g2.setUsers(List.of(u2));
-
-            em.persist(g1);
-            em.persist(g2);
-            em.persist(u1);
-            em.persist(u2);
-
+            // Create a new electronic device
+            ElectronicDevice device = new ElectronicDevice();
+            device.setName("Laptop");
+            device.setVoltage(220);
+            em.persist(device);
 
             em.getTransaction().commit();
         } finally {

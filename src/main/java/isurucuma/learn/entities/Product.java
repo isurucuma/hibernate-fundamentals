@@ -2,26 +2,18 @@ package isurucuma.learn.entities;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
-@Table(name = "users")
-public class User {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String name;
+    protected int id;
+    protected String name;
 
-    public List<Group> getGroups() {
-        return groups;
+    @Override
+    public String toString() {
+        return "Product{" + "id=" + id + ", name='" + name + '\'' + '}';
     }
-
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
-    }
-
-    @ManyToMany(mappedBy = "users")
-    private List<Group> groups;
 
     public int getId() {
         return id;
