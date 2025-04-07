@@ -3,7 +3,6 @@ package isurucuma.learn.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

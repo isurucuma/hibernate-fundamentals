@@ -1,13 +1,11 @@
 package isurucuma.learn;
 
-import isurucuma.learn.entities.Book;
-import isurucuma.learn.entities.ElectronicDevice;
+import isurucuma.learn.entities.Product;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,20 +25,24 @@ public class App {
 
         try {
             em.getTransaction().begin();
+//            Product product = new Product();
+//            product.setName("Product 1");
+//            em.persist(product);
+//
+//            product = new Product();
+//            product.setName("Product 2");
+//            em.persist(product);
 
-            // Create a new book
-            Book book = new Book();
-            book.setName("Effective Java");
-            book.setAuthor("Joshua Bloch");
-            book.setIsbn("978-0134686097");
-            em.persist(book);
+            // give me JPQL query to select p.name LIKE '%2'
 
-            // Create a new electronic device
-            ElectronicDevice device = new ElectronicDevice();
-            device.setName("Laptop");
-            device.setVoltage(220);
-            em.persist(device);
+            em.createQuery("SELECT p FROM Product p WHERE p.name LIKE '%2'", Product.class)
+                    .getResultList()
+                    .forEach(System.out::println);
 
+            // give me JPQL query for a count
+            Long count = em.createQuery("SELECT COUNT(p) FROM Product p", Long.class)
+                    .getSingleResult();
+            System.out.println("Count: " + count);
             em.getTransaction().commit();
         } finally {
             em.close();
